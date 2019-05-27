@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>List User</title>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"
+	media="screen" />
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<th:block th:include="navigation"></th:block>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-offset-0 col-sm-4">
+				<form th:action="@{/getUserById}" method="post" name="f">
+					<label class="control-label">User ID: </label> <input
+						required="true" autofocus="true" type="text" name="id"> <input
+						type="submit" value="Find">
+				</form>
+
+			</div>
+		</div>
+		<br>
+		<div class="alert alert-danger alert-dismissible" th:if="${errorMessage}">
+			<span th:utext="${errorMessage}"></span>
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		</div>
+		<table class="table table-striped">
+			<tr>
+				<th>ID</th>
+				<th>Username</th>
+				<th>Delete</th>
+				<th>Edit</th>
+			</tr>
+			<tr th:if="${userFound}">
+				<td th:utext="${userFound.id}">...</td>
+				<td th:utext="${userFound.username}">...</td>
+				<td><a th:href="@{'/deleteUser'(id=${userFound.id})}">Delete</a></td>
+				<td><a th:href="@{'/updateUser'(id=${userFound.id})}">Edit</a></td>
+			</tr>
+			<tr th:each="user : ${users}">
+				<td th:utext="${user.id}">...</td>
+				<td th:utext="${user.username}">...</td>
+				<td><a th:href="@{'/deleteUser'(id=${user.id})}">Delete</a></td>
+				<td><a th:href="@{'/updateUser'(id=${user.id})}">Edit</a></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

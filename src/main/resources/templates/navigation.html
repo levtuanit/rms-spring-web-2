@@ -1,0 +1,43 @@
+<div th:fragment="navbar" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" th:href="@{/}">RESOURCE MANAGEMENT
+					SYSTEM</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a th:href="@{/addUser}">Add User</a></li>
+				<li><a th:href="@{/userList}">List User</a></li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li th:if="${#request.userPrincipal != null}">
+					<a href="">
+					<span class="glyphicon glyphicon-user"></span>
+					<label th:text="${#request.userPrincipal.name}">
+					</label>
+					</a>
+				</li>
+				<li th:if="${#request.userPrincipal != null}">
+					<a th:href="@{/logout}">
+						<span class="glyphicon glyphicon-log-out"></span>
+						Logout
+					</a>
+				</li>
+				<li th:if="${#request.userPrincipal == null}">
+					<a th:href="@{/register}">
+						<span class="glyphicon glyphicon-user"></span>
+						Sign Up
+					</a>
+				</li>
+				<li th:if="${#request.userPrincipal == null}">
+					<a th:href="@{/login}">
+					<span class="glyphicon glyphicon-log-in"></span>
+							Login
+					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</div>
