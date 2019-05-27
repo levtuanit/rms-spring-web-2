@@ -9,12 +9,13 @@ public class WebConfiguration implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		//Add bootstrap resource
 		registry.addResourceHandler("/bootstrap/**") //
 				.addResourceLocations("classpath:/META-INF/resources/webjars/bootstrap/3.3.6/");
+		
+		//Add jquery resource
 		registry.addResourceHandler("/jquery/**") //
 		.addResourceLocations("classpath:/META-INF/resources/webjars/jquery/1.9.1/");
-//		registry.addResourceHandler("/images/**")
-//        .addResourceLocations("/resources/static/images/"); 
 	}
 
 }

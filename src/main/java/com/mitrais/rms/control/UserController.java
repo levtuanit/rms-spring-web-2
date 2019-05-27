@@ -23,6 +23,7 @@ public class UserController {
 	private static final String REGISTER_SUCCESS = "Register successfully";
 	private static final String UPDATE_SUCCESS = "Update successfully";
 	private static final String USER_EXISTS = "Username is already used";
+	private static final String CANT_FIND_ID = "Can't find result with this ID";
 
 	@Autowired
 	private UserService userService;
@@ -128,12 +129,7 @@ public class UserController {
 		return view;
 	}
 	
-	//
-//	@GetMapping("/logoutSuccess")
-//	public ModelAndView goLogoutSuccess() {
-//		return new ModelAndView("logout_success");
-//	}
-	
+
 	// Access to update User page and update User
 	@GetMapping("/updateUser")
 	public ModelAndView goUpdateUser(@PathParam(value = "id") Long id) {
@@ -144,9 +140,9 @@ public class UserController {
 	}
 	
 	@PostMapping("/updateUser")
-	public ModelAndView updateUser(@ModelAttribute("user") User user, @ModelAttribute(value = "id") Long id) {
+	public ModelAndView updateUser(@ModelAttribute("user") User user) {
 		ModelAndView view = new ModelAndView("edit_user");
-			User userUpdate = userService.findUserById(id);
+			User userUpdate = userService.findUserById(user.getId());
 			try {
 				userUpdate.setPassword(user.getPassword());
 				view.addObject("successMessage",UPDATE_SUCCESS);
@@ -164,16 +160,11 @@ public class UserController {
 		ModelAndView view = new ModelAndView("user_list");
 		try {
 			User user = userService.findUserById(id);
-			if (user != null) {
 				view.addObject("userFound", user);
-			} else {
-				view.addObject("errorMessage", "Can't find this ID");	
+			} catch (Exception e) {
+				view.addObject("errorMessage", CANT_FIND_ID);
+				return view;
 			}
-		} catch (Exception e) {
-			view.addObject("errorMessage", "Can't find this ID");
-			return view;
-		}
-		
 		return view;
 	}
 }
